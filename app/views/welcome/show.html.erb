@@ -4,10 +4,4 @@
   <p>Email: <%= current_user.email %></p>
   <%= link_to "View Posts", posts_path %>
   <%= button_to "Logout", logout_path, method: :get %>
-<% else %>
-  <p>Please log in to continue.</p>
-  <div style="display: flex; gap: 10px;">
-    <%= button_to "Login", "/auth/auth0", method: :get %>
-    <%= button_to "Sign Up", "/auth/auth0?screen_hint=signup", method: :get %>
-  </div>
 <% end %>

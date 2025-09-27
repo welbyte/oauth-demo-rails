@@ -31,9 +31,9 @@
         <%= button_to "Logout", "/auth/logout", method: :get, data: { turbo: false } %>
       <% else %>
         <% if params[:group_code].present? %>
-          <%= button_to "Login", "/auth/auth0?organization=#{params[:group_code]}", method: :post, data: { turbo: false } %>
+          <%= button_to params[:screen_hint] == "signup" ? "Sign Up" : "Login", "/auth/auth0?organization=#{params[:group_code]}&screen_hint=#{params[:screen_hint]}", method: :post, data: { turbo: false } %>
         <% else %>
-          <%= button_to "Login", "/auth/auth0", method: :post, data: { turbo: false } %>
+          <%= button_to params[:screen_hint] == "signup" ? "Sign Up" : "Login", "/auth/auth0?screen_hint=#{params[:screen_hint]}", method: :post, data: { turbo: false } %>
         <% end %>
       <% end %>
     </header>
