@@ -1,17 +1,13 @@
-<% if Current.user %>
-  <% if Current.organization %>
-    <div style="padding: 20px; background: #f5f5f5; border-radius: 8px; margin-bottom: 20px;">
-      <% if Current.organization[:logo_url].present? %>
-        <img src="<%= Current.organization[:logo_url] %>" alt="<%= Current.organization[:display_name] %> logo" style="max-height: 60px; margin-bottom: 10px;">
-      <% end %>
-      <h2><%= Current.organization[:display_name] %></h2>
-    </div>
-  <% end %>
-  <%= button_to "Logout", "/auth/logout", method: :get, data: { turbo: false } %>
+<h1>Welcome!</h1>
+<% if logged_in? %>
+  <p>Hello, <%= current_user.name %>!</p>
+  <p>Email: <%= current_user.email %></p>
+  <%= link_to "View Posts", posts_path %>
+  <%= button_to "Logout", logout_path, method: :get %>
 <% else %>
-  <% if params[:org_name].present? %>
-    <%= button_to "Login", "/auth/auth0?organization=#{params[:org_name]}", method: :post, data: { turbo: false } %>
-  <% else %>
-    <%= button_to "Login", "/auth/auth0", method: :post, data: { turbo: false } %>
-  <% end %>
+  <p>Please log in to continue.</p>
+  <div style="display: flex; gap: 10px;">
+    <%= button_to "Login", "/auth/auth0", method: :get %>
+    <%= button_to "Sign Up", "/auth/auth0?screen_hint=signup", method: :get %>
+  </div>
 <% end %>

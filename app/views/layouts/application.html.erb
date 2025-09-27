@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Bootcamp" %></title>
+    <title><%= content_for(:title) || "Auth0 Test App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Bootcamp">
@@ -24,6 +24,20 @@
   </head>
 
   <body>
+    <header>
+      <% if Current.user.present? %>
+        <pre><%= Current.user.email %></pre>
+        <pre><%= Current.organization[:display_name] %></pre>
+        <%= button_to "Logout", "/auth/logout", method: :get, data: { turbo: false } %>
+      <% else %>
+        <% if params[:group_code].present? %>
+          <%= button_to "Login", "/auth/auth0?organization=#{params[:group_code]}", method: :post, data: { turbo: false } %>
+        <% else %>
+          <%= button_to "Login", "/auth/auth0", method: :post, data: { turbo: false } %>
+        <% end %>
+      <% end %>
+    </header>
+
     <%= yield %>
   </body>
 </html>

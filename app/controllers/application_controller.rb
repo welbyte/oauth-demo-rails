@@ -10,4 +10,14 @@ class ApplicationController < ActionController::Base
       Current.user = User.find(session[:user_id])
     end
   end
+
+  helper_method :current_user, :logged_in?
+
+  def current_user
+    Current.user
+  end
+
+  def logged_in?
+    current_user.present?
+  end
 end
