@@ -24,6 +24,30 @@
   </head>
 
   <body>
+    <header>
+      <% if user_signed_in? %>
+        <p>Welcome, <%= current_user.name.presence || current_user.email %>!</p>
+        <%= button_to "Sign out", logout_path, method: :delete %>
+      <% else %>
+        <%= button_to login_path,
+                      method: :post,
+                      data: { turbo: false },
+                      class: "google-btn" do %>
+          <div class="google-btn-content">
+            <img src="https://developers.google.com/identity/images/g-logo.png"
+                  alt="Google logo" class="google-logo">
+            <span>Sign in with Google</span>
+          </div>
+        <% end %>
+      <% end %>
+    </header>
+
+    <% flash.each do |key, message| %>
+      <div class="flash <%= key %>">
+        <%= message %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
