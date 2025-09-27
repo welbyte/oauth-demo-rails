@@ -1,4 +1,4 @@
-require 'net/http'
+require "net/http"
 
 class SessionsController < ApplicationController
   skip_forgery_protection only: :show
@@ -61,7 +61,7 @@ class SessionsController < ApplicationController
 
     jwk = fetch_jwk(header["kid"])
     public_key = jwk_to_rsa(jwk)
-    data = [header_b64, payload_b64].join(".")
+    data = [ header_b64, payload_b64 ].join(".")
     ok = public_key.verify(OpenSSL::Digest::SHA256.new, sig, data)
     return redirect_to root_path, alert: "Bad signature" unless ok
 
@@ -76,7 +76,7 @@ class SessionsController < ApplicationController
     # 4) Create session
     user = User.find_or_create_by(provider: "google", uid: payload["sub"]) do |u|
       u.email = payload["email"]
-      u.name  = payload["name"] || [payload["given_name"], payload["family_name"]].compact.join(" ")
+      u.name  = payload["name"] || [ payload["given_name"], payload["family_name"] ].compact.join(" ")
     end
 
     reset_session
