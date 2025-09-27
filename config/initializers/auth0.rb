@@ -14,9 +14,14 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     setup: lambda do |env|
       request = Rack::Request.new(env)
       organization = request.params["organization"]
+      screen_hint = request.params["screen_hint"]
 
       if organization.present?
         env["omniauth.strategy"].options[:authorize_params][:organization] = organization
+      end
+      
+      if screen_hint.present?
+        env["omniauth.strategy"].options[:authorize_params][:screen_hint] = screen_hint
       end
     end
   )
