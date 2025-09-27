@@ -25,6 +25,12 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
   end
 
+  config.x.auth0_client = Auth0Client.new(
+    client_id: Rails.application.config_for(:auth0)["auth0_client_id"],
+    client_secret: Rails.application.config_for(:auth0)["auth0_client_secret"],
+    domain: Rails.application.config_for(:auth0)["auth0_domain"]
+  )
+
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
