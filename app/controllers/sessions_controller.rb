@@ -79,9 +79,10 @@ class SessionsController < ApplicationController
       u.name  = payload["name"] || [ payload["given_name"], payload["family_name"] ].compact.join(" ")
     end
 
+    return_to = session[:return_to]
     reset_session
     session[:user_id] = user.id
-    redirect_to root_path, notice: "Signed in"
+    redirect_to(return_to || root_path, notice: "Signed in")
   rescue => e
     Rails.logger.error("Google OIDC error: #{e.class}: #{e.message}")
     redirect_to root_path, alert: "Sign-in failed"

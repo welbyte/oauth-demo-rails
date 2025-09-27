@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <pre><%= session[:return_to] %></pre>
     <header>
       <% if user_signed_in? %>
         <p>Welcome, <%= current_user.name.presence || current_user.email %>!</p>

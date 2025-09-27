@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user!
       unless user_signed_in?
+        session[:return_to] = request.fullpath # Remember where they were trying to go
         redirect_to root_path, alert: "You must sign in first"
       end
     end
